@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
 
 const productSchema = mongoose.Schema({
     name:{
@@ -23,9 +24,27 @@ const productSchema = mongoose.Schema({
     images:Array,
     category:{
         type:mongoose.Types.ObjectId,
-        ref:'categoryModel'
+        ref:'categoryModel',
+        required:[true,'Must be assign to Category']
+    },
+    stock:{
+        type:Number,
+        default:1
     }
 })
+
+productSchema.pre('save',function(next){
+    if (this.isNew || this.isModified('name')) {
+        this.slug = slugify(this.name, { lower: true });
+    }
+    next()
+})
+
+productSchema.pre(/^findOneAndUpdate/,function(next){
+    this._update.slug = slugify(this._update.name,{lower:true})
+    next();
+})
+
 
 const productModel = mongoose.model('product',productSchema);
 

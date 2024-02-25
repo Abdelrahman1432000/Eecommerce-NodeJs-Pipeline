@@ -8,8 +8,21 @@ const productRouter = express.Router();
 productRouter.route('/products')
 .post(authController.auth,
     authController.adminOnly,
-    productController.uploadArrayofImage,
+    productController.uploadMutipleImage,
     productController.addProduct)
+.get(productController.getAllProduct)
+
+productRouter.get('/products/:id',productController.getProductById);
+productRouter.get('/products/:catId/category',productController.getProductsByCategoryId);
+
+productRouter.route('/products/:id')
+.put(authController.auth,
+    authController.adminOnly,
+    productController.uploadMutipleImage,
+    productController.updateProduct)
+.delete(authController.auth,
+    authController.adminOnly,
+    productController.deleteProduct)
 
 
 module.exports = productRouter

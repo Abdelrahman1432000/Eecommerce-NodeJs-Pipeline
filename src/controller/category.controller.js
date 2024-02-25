@@ -70,7 +70,7 @@ exports.updateCategory = handlerAsync(async (req,res,next)=> {
         await categoryModel.findByIdAndUpdate(category._id,{
             name:req.body.name,
             image:req.file.filename
-        })
+        },{runValidators: true})
     }else{
         await categoryModel.findByIdAndUpdate(category._id,{
             name:req.body.name,
