@@ -8,6 +8,8 @@ const globalErrorHandler = require('./src/middleware/globalErrorHandler')
 const authRouter = require('./src/router/auth.routes')
 const categroyRouter = require('./src/router/category.routes')
 const productRouter = require('./src/router/product.routes')
+const couponRouter = require('./src/router/coupon.routes')
+
 
 config.config({
     path:'./config.env'
@@ -24,6 +26,7 @@ mongoose.connect(process.env.DATABASE_LOCAL).then(()=>{console.log("Conncted")})
 app.use(authRouter);
 app.use(categroyRouter);
 app.use(productRouter)
+app.use(couponRouter)
 
 app.use(globalErrorHandler);
 
