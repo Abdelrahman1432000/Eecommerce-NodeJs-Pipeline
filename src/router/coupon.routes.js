@@ -6,9 +6,19 @@ const couponController = require('../controller/coupon.controller')
 const couponRouter = express.Router();
 
 
+
+
+couponRouter.use(authController.auth,authController.adminOnly)
+
 couponRouter.route('/coupons')
-.post(authController.auth,authController.adminOnly,couponController.addCoupon)
-.get(authController.auth,authController.adminOnly,couponController.getAllCoupon)
+.post(couponController.addCoupon)
+.get(couponController.getAllCoupon)
+
+couponRouter.route('/coupons/:id')
+.put(couponController.updateCoupon)
+.delete(couponController.deleteCoupon)
+
+couponRouter.post('/apply-coupon',couponController.applyCouponToProduct)
 
 
 

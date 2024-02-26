@@ -14,12 +14,7 @@ const productSchema = mongoose.Schema({
     },
     finalPrice:{
         type:Number,
-        validate:{
-            validator:function(v){
-                return v < this.priceBeforeDiscount
-            },
-            message: "finalPrice is greater than priceBeforeDiscount"
-        }
+        min:1
     },
     images:Array,
     category:{
@@ -30,7 +25,7 @@ const productSchema = mongoose.Schema({
     stock:{
         type:Number,
         default:1
-    }
+    },
 })
 
 productSchema.pre('save',function(next){
@@ -41,7 +36,9 @@ productSchema.pre('save',function(next){
 })
 
 productSchema.pre(/^findOneAndUpdate/,function(next){
-    this._update.slug = slugify(this._update.name,{lower:true})
+    if(this._update.slug){
+        this._update.slug = slugify(this._update.name,{lower:true})
+    }
     next();
 })
 

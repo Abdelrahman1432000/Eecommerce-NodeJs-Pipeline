@@ -22,7 +22,17 @@ const couponSchema = mongoose.Schema({
     createdBy:{
         type:mongoose.Types.ObjectId,
         ref:'user'
-    }
+    },
+    updatedBy:{
+        type:mongoose.Types.ObjectId,
+        ref:'user'
+    },
+    products:[
+        {
+            type:mongoose.Types.ObjectId,
+            ref:'product'
+        }
+    ]
 },{
     timestamps: true
 });
