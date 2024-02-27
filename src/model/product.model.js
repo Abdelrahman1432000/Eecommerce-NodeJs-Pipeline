@@ -10,7 +10,8 @@ const productSchema = mongoose.Schema({
     slug:String,
     priceBeforeDiscount:{
         type:Number,
-        min:1
+        min:1,
+        required:[true,'Product Must have a Price']
     },
     finalPrice:{
         type:Number,
