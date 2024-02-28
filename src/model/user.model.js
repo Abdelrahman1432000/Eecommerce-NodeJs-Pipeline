@@ -36,7 +36,11 @@ const userSchema = mongoose.Schema({
     },
     address:Array,
     resetPassword:String,
-    emailVerified:String
+    emailVerified:String,
+    isActive:{
+        type:Boolean,
+        default:true
+    }
 })
 
 

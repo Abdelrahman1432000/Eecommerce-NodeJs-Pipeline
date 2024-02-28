@@ -1,15 +1,42 @@
 const express = require('express')
 
-const matchPassword = require('../middleware/matchPassword')
 const authController = require('../controller/auth.controller')
+const mustBeUser = require('../middleware/mustBeUser')
+const userValidation = require('../helper/user.validations')
 
 const authRouter = express.Router()
 
-authRouter.post('/register',matchPassword,authController.register);
-authRouter.get('/verify/:token',authController.verifyAccount);
-authRouter.post('/login',authController.login);
-authRouter.post('/forget-password',authController.forgetPassword)
-authRouter.post('/reset-password/:token',matchPassword,authController.resetPassword)
+authRouter.post('/register',
+userValidation.RegisterValidate,
+authController.register);
+
+authRouter.get('/verify/:token',
+authController.verifyAccount);
+
+authRouter.post('/login',
+userValidation.loginValidate,
+authController.login);
+
+authRouter.post('/forget-password',
+userValidation.forgetValidate,
+authController.forgetPassword)
+
+authRouter.post('/reset-password/:token',
+userValidation.resetValidate,
+authController.resetPassword);
+
+authRouter.put('/deactive-user',
+authController.auth,
+authController.adminOnly,
+mustBeUser,
+authController.deAactiveUser);
+
+authRouter.put('/update-user',
+authController.auth,
+authController.adminOnly,
+mustBeUser,
+userValidation.updateUser,
+authController.updateUser);
 
 module.exports = authRouter
 

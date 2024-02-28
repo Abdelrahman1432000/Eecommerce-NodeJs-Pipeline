@@ -6,13 +6,13 @@ const couponSchema = mongoose.Schema({
         type:String,
         upper:true,
         minlength:5,
-        requrired:[true,'Coupon Must have Code'],
+        required:[true,'Coupon Must have Code'],
         unique:true
     },
     value:{
         type:Number,
         min:1,
-        default:1
+        required:[true,'Coupon Must have a value']
     },
     expireIn:{
         type:Date,

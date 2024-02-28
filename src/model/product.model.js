@@ -17,7 +17,11 @@ const productSchema = mongoose.Schema({
         type:Number,
         min:1
     },
-    images:Array,
+    images:{
+        type:Array,
+        required:[true,'Must be upload Images'],
+        min:1
+    },
     category:{
         type:mongoose.Types.ObjectId,
         ref:'categoryModel',
