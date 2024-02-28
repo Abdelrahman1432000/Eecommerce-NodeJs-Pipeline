@@ -10,6 +10,7 @@ const categroyRouter = require('./src/router/category.routes')
 const productRouter = require('./src/router/product.routes')
 const couponRouter = require('./src/router/coupon.routes')
 const cartRouter = require('./src/router/cart.routes')
+const orderRouter = require('./src/router/order.routes')
 
 
 config.config({
@@ -29,6 +30,7 @@ app.use(categroyRouter);
 app.use(productRouter)
 app.use(couponRouter)
 app.use(cartRouter)
+app.use(orderRouter)
 
 app.use(globalErrorHandler);
 

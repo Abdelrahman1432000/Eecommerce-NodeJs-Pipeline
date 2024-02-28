@@ -13,7 +13,7 @@ const cartSchema = mongoose.Schema({
     },
     totalAfterDiscount:{
         type:Number,
-        min:1
+        min:0
     },
     products:[{
         product:{

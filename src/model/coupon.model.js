@@ -32,9 +32,15 @@ const couponSchema = mongoose.Schema({
             type:mongoose.Types.ObjectId,
             ref:'product'
         }
+    ],
+    carts:[
+        {
+            type:mongoose.Types.ObjectId,
+            ref:'cart'
+        }
     ]
 },{
-    timestamps: true
+
 });
 
 const couponModel = mongoose.model('coupon',couponSchema);
