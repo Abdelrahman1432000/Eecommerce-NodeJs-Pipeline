@@ -4,6 +4,16 @@ const productModel = require('../model/product.model')
 const couponModel = require("../model/coupon.model");
 
 
+
+exports.getMyCart = handlerAsync(async (req,res,next) => {
+    const myCart = await cartModel.findOne({userId:req.user._id}).populate('products.product')
+    if(!myCart) return next(new Error("You Don't have a Cart"))
+    res.json({
+        myCart
+    })
+})
+
+
 exports.addCart = handlerAsync(async (req,res,next)=>{
     const {productId, quantity} = req.body;
     const product = await productModel.findById(productId)

@@ -13,8 +13,8 @@ cartRouter.post('/apply-coupon-cart',checkCartCoupon,cartController.applyCouponT
 cartRouter.route('/carts')
 .post(cartAlreadyExist,cartController.addCart)
 .put(cartController.updateCart)
-.delete(cartController.deleteProductFromCart);
-
+.delete(cartController.deleteProductFromCart)
+.get(cartController.getMyCart);
 
 module.exports = cartRouter
 

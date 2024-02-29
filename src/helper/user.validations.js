@@ -6,7 +6,8 @@ const updateUser =  Joi.object({
     userName: Joi.string().min(3),
     role: Joi.any().valid('admin','user'),
     address: Joi.array().items(Joi.string().required()),
-    userId: Joi.string().hex()
+    userId: Joi.string().hex(),
+    isActive: Joi.boolean()
 })
 
 exports.updateUser = handlerAsync(async (req,res,next) => {

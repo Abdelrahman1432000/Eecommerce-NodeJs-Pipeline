@@ -2,12 +2,19 @@ const stripe = require('stripe')(process.env.YOUR_STRIPE_SECRET_KEY);
 
 const handlerAsync = require("../middleware/handlerAsync");
 const orderModel = require("../model/order.model");
-const cartModel = require("../model/cart.model")
+const cartModel = require("../model/cart.model");
+const productModel = require('../model/product.model');
 
 
 
 const removeAuthCart = async (cartId) => {
     await cartModel.findByIdAndDelete(cartId);
+}
+
+const decreaseFromStock = async (productId,quantity) => {
+    const product = await productModel.findById(productId);
+    product.stock -= quantity;
+    product.save();
 }
 exports.cashOnDelivery = handlerAsync(async (req,res,next)=>{
     const order = await orderModel.create({
@@ -15,6 +22,9 @@ exports.cashOnDelivery = handlerAsync(async (req,res,next)=>{
         products:req.myCart.products,
         OrderPrice: req.myCart.totalAfterDiscount || req.myCart.totalPrice,
     });
+    req.myCart.products.forEach((ele) => {
+        decreaseFromStock(ele.product,ele.quantity);
+    })
     removeAuthCart(req.myCart._id);
     res.status(201).json({
         message: "Order Created Successfully",

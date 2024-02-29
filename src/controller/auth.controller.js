@@ -76,8 +76,11 @@ exports.login = handlerAsync(async (req, res, next) => {
   const { email, password } = req.body;
   //check if Found this Email
   const user = await userModel
-    .findOne({ email, isVerified: true })
+    .findOne({ email, isVerified: true , isActive:true})
     .select("+password");
+  if(!user){
+    return next(new Error("password or Email is Invalid"));
+  }
   const hashed = await bcrypt.compare(password, user.password);
   if (!hashed) {
     const err = new Error("Password Or Email is Invalid");
@@ -130,6 +133,7 @@ exports.resetPassword = handlerAsync(async (req, res, next) => {
   const hashed = await bcrypt.hash(req.body.password, 10);
   await userModel.findByIdAndUpdate(userFound._id, {
     password: hashed,
+    resetPassword: ''
   });
 
   res.status(202).json({
@@ -172,7 +176,7 @@ exports.deAactiveUser = handlerAsync(async (req, res, next) => {
 
 exports.updateUser = handlerAsync(async (req, res, next) => {
   //userName , role , Address
-  const arrayFieldValid = ["userName", "role", "address", "userId"];
+  const arrayFieldValid = ["userName", "role", "address", "userId","isActive"];
   const validKey = Object.keys(req.body).filter((ele) =>
     arrayFieldValid.includes(ele)
   );

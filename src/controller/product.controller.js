@@ -93,7 +93,7 @@ exports.addProduct = handlerAsync(async (req,res,next)=>{
 exports.updateProduct = handlerAsync(async (req,res,next)=>{
     const product = await productModel.findById(req.params.id);
     let productUpdate;
-    if(req.files){
+    if(req.files.length > 0){
         product.images.forEach(element => {
             if(fs.existsSync(`uploads/product/${element}`)){
                 fs.unlinkSync(`uploads/product/${element}`)
@@ -114,12 +114,11 @@ exports.updateProduct = handlerAsync(async (req,res,next)=>{
             name:req.body.name,
             category:req.body.category || product.category,
             stock:req.body.stock || product.stock,
-            images: product.images,
         },{runValidators: true,new:true})
     }
 
     res.status(202).json({
-        message:"Category Updated",
+        message:"Product Updated",
         productUpdate
     });
 })
