@@ -22,7 +22,7 @@ const Register = Joi.object({
     userName: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    password_confirmation: Joi.ref('password'),
+    password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
     address: Joi.array().items(Joi.string().required()),
 });
 

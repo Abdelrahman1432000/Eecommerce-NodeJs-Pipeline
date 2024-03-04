@@ -34,7 +34,8 @@ exports.uploadImage = upload.single('image');
 exports.addCateogry = handlerAsync(async (req,res,next) => {
     const category = await categoryModel.create({
         name:req.body.name,
-        image:req.file.filename
+        image:req.file.filename,
+        createdBy: req.user._id
     })
 
     res.status(201).json({

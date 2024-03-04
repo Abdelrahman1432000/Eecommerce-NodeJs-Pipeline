@@ -9,7 +9,11 @@ const categorySchema = mongoose.Schema({
     },
     image: {
         type: String
-    }
+    },
+    createdBy:{
+        type:mongoose.Types.ObjectId,
+        ref:'user'
+    },
 }, {
     timestamps: true
 });
