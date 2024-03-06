@@ -57,7 +57,7 @@ exports.paymentStripe = handlerAsync(async (req,res,next) => {
         success_url: "http://localhost:3000/success",
         cancel_url: "http://localhost:3000/cancel",
         client_reference_id: req.user._id
-      });
+    });
 
 
     const order = await orderModel.create({

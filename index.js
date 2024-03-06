@@ -24,13 +24,15 @@ app.use(morgan('dev'))
 
 mongoose.connect(process.env.DATABASE_LOCAL).then(()=>{console.log("Conncted")})
 
-
 app.use(authRouter);
 app.use(categroyRouter);
-app.use(productRouter)
-app.use(couponRouter)
-app.use(cartRouter)
-app.use(orderRouter)
+app.use(productRouter);
+
+app.use(cartRouter);
+app.use(orderRouter);
+app.use(couponRouter);
+
+
 
 app.use(globalErrorHandler);
 
